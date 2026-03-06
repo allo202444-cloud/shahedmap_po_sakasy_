@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Судно</title>
+    <title>ППУ Система</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         html, body, #map { height: 100%; width: 100%; margin: 0; padding: 0; background: #fff; }
@@ -29,7 +29,7 @@
             cursor: pointer; font-size: 11px; border-radius: 2px; font-weight: bold;
         }
         .btn-opt.del { background: #ff4d4d; color: #fff; border: none; }
-        .shahed-icon { transition: transform 0.2s ease-out; }
+        .shahed-icon { transition: transform 0.2s ease-out; display: block; }
     </style>
 </head>
 <body>
@@ -46,7 +46,6 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    // Шлях до локального файлу
     const imgUrl = "shahed.png"; 
 
     const map = L.map('map', { zoomControl: false }).setView([48.3, 31.1], 6);
@@ -65,7 +64,7 @@
     let currentObj = null;
     let allMarkers = L.layerGroup().addTo(map);
 
-    // --- ГАРЯЧІ КЛАВІШІ ---
+    // Гаряча клавіша "1"
     document.addEventListener('keydown', function(e) {
         if (e.key === '1') {
             activateShahed();
@@ -81,8 +80,6 @@
         shahedMode = true; 
         rotateMode = false;
         currentObj = null;
-        // Візуальний відгук у консоль (опціонально)
-        console.log("Режим додавання активовано");
     }
 
     function updateCount() {
@@ -100,11 +97,14 @@
     map.on('click', function(e) {
         if (shahedMode) {
             if (!currentObj) {
+                // Розмір встановлено на 22px, анкор на 11px (центр)
                 const icon = L.divIcon({
                     className: 's-div',
-                    html: `<img src="${imgUrl}" class="shahed-icon" style="width:26px;height:26px;">`,
-                    iconSize: [26, 26], iconAnchor: [13, 13]
+                    html: `<img src="${imgUrl}" class="shahed-icon" style="width:22px;height:22px;">`,
+                    iconSize: [22, 22], 
+                    iconAnchor: [11, 11]
                 });
+                
                 currentObj = L.marker(e.latlng, { icon: icon }).addTo(allMarkers);
                 
                 currentObj.on('click', function(ev) {
