@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>ППУ Система</title>
+    <title>Судно</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         html, body, #map { height: 100%; width: 100%; margin: 0; padding: 0; background: #fff; }
@@ -46,7 +46,7 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    // Путь к локальному файлу
+    // Шлях до локального файлу
     const imgUrl = "shahed.png"; 
 
     const map = L.map('map', { zoomControl: false }).setView([48.3, 31.1], 6);
@@ -65,6 +65,13 @@
     let currentObj = null;
     let allMarkers = L.layerGroup().addTo(map);
 
+    // --- ГАРЯЧІ КЛАВІШІ ---
+    document.addEventListener('keydown', function(e) {
+        if (e.key === '1') {
+            activateShahed();
+        }
+    });
+
     function toggleShahed() {
         const b = document.getElementById('btnShahed');
         b.style.display = (b.style.display === 'none') ? 'flex' : 'none';
@@ -74,6 +81,8 @@
         shahedMode = true; 
         rotateMode = false;
         currentObj = null;
+        // Візуальний відгук у консоль (опціонально)
+        console.log("Режим додавання активовано");
     }
 
     function updateCount() {
@@ -147,4 +156,3 @@
 </script>
 </body>
 </html>
-
